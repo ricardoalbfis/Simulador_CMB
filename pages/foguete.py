@@ -86,11 +86,11 @@ st.markdown("---")
 st.markdown("""
 ### A Lição: Por que a Estratégia 2 é impossível?
 À primeira vista, a Estratégia 2 parece ser melhor: ela chega ao destino em menos tempo, tanto para os relógios da Terra quanto para os da nave! 
-O absurdo se revela na **aceleração própria** ($a_{\\text{própria}}$). Para que a aceleração coordenada ($a_{\\text{coord}}$) permaneça constante à medida que a nave se aproxima da velocidade da luz, a força real exercida sobre a tripulação deve aumentar dramaticamente para compensar a inércia relativística. A relação no movimento retilíneo é:
+O absurdo se revela na **aceleração própria** ($a_{\text{própria}}$). Para que a aceleração coordenada ($a_{\text{coord}}$) permaneça constante à medida que a nave se aproxima da velocidade da luz, a força real exercida sobre a tripulação deve aumentar dramaticamente para compensar a inércia relativística. A relação no movimento retilíneo é:
 
-$$ a_{\\text{própria}} = \\gamma^3 a_{\\text{coord}} $$
+$$ a_{\text{própria}} = \gamma^3 a_{\text{coord}} $$
 
-Quando o foguete atinge $v = 0{,}9c$, o fator de Lorentz é $\\gamma \approx 2{,}29$. Consequentemente, a tripulação seria esmagada contra os assentos com uma força equivalente a **$\approx 12g$**! Nenhuma tripulação humana sobrevive a uma aceleração dessas por meses seguidos. É por isso que, na literatura, a aceleração *própria* constante é o cenário realista.
+Quando o foguete atinge $v = 0{,}9c$, o fator de Lorentz é $\gamma \approx 2{,}29$. Consequentemente, a tripulação seria esmagada contra os assentos com uma força equivalente a **$\approx 12g$**! Nenhuma tripulação humana sobrevive a uma aceleração dessas por meses seguidos. É por isso que, na literatura, a aceleração *própria* constante é o cenário realista.
 """)
 
 # ==========================================
