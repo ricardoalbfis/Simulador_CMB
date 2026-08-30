@@ -47,9 +47,9 @@ st.sidebar.header("Variáveis do Modelo")
 st.sidebar.markdown("*O tempo de cálculo é de ~1 segundo por ajuste.*")
 
 h0 = st.sidebar.slider("Taxa de Hubble ($H_0$)", 50.0, 85.0, 67.4, 0.5)
-ob = st.sidebar.slider("Dens. Bariônica ($\Omega_b h^2$)", 0.010, 0.040, 0.0224, 0.001)
-oc = st.sidebar.slider("Matéria Escura ($\Omega_c h^2$)", 0.050, 0.250, 0.120, 0.005)
-ok = st.sidebar.slider("Curvatura ($\Omega_k$)", -0.05, 0.05, 0.00, 0.01)
+ob = st.sidebar.slider(r"Dens. Bariônica ($\Omega_b h^2$)", 0.010, 0.040, 0.0224, 0.001)
+oc = st.sidebar.slider(r"Matéria Escura ($\Omega_c h^2$)", 0.050, 0.250, 0.120, 0.005)
+ok = st.sidebar.slider(r"Curvatura ($\Omega_k$)", -0.05, 0.05, 0.00, 0.01)
 ns = st.sidebar.slider("Índice Espectral ($n_s$)", 0.85, 1.10, 0.965, 0.01)
 as_amp = st.sidebar.slider("Amplitude ($A_s$) [Fator]", 0.50, 1.50, 1.00, 0.05)
 
@@ -61,8 +61,8 @@ om_m = (ob + oc) / (h**2)
 om_lambda = 1.0 - om_m - ok
 
 col1, col2 = st.columns(2)
-col1.metric("Matéria Total ($\Omega_m$)", f"{om_m:.3f}")
-col2.metric("Energia Escura ($\Omega_\Lambda$)", f"{om_lambda:.3f}")
+col1.metric(r"Matéria Total ($\Omega_m$)", f"{om_m:.3f}")
+col2.metric(r"Energia Escura ($\Omega_\Lambda$)", f"{om_lambda:.3f}")
 
 # --- 4. PLOTAGEM DO GRÁFICO ---
 with st.spinner('Resolvendo equações de Boltzmann via CAMB...'):
@@ -78,8 +78,8 @@ ax.plot(ls_base[2:2501], cl_base[2:2501], color='#94a3b8', linestyle='--', linew
 ax.plot(ls_base[2:2501], cl_custom[2:2501], color='#ef4444', linewidth=2.5, label='Modelo Modificado', zorder=2)
 
 # Configuração de Eixos
-ax.set_xlabel("Multipolo $\ell$", fontsize=12)
-ax.set_ylabel("$\ell(\ell+1)C_\ell / 2\pi \quad [\mu K^2]$", fontsize=12)
+ax.set_xlabel(r"Multipolo $\ell$", fontsize=12)
+ax.set_ylabel(r"$\ell(\ell+1)C_\ell / 2\pi \quad [\mu K^2]$", fontsize=12)
 
 if escala_log:
     ax.set_xlim(2, 2500)
