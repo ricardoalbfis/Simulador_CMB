@@ -25,19 +25,18 @@ T = st.sidebar.slider(
 
 v0 = st.sidebar.slider(
     "Velocidade máxima (v0)", 
-    min_value=0.10, 
+    min_value=0.0, # <-- Opção 0 adicionada aqui
     max_value=0.999999999, 
     value=0.80, 
     step=0.000000001,
     format="%.9f",
-    help="Fração da velocidade da luz (c=1). Você pode clicar no número acima da barra para digitar valores extremos (ex: 0.999999999)."
+    help="Fração da velocidade da luz (c=1). Você pode clicar no número acima da barra para digitar valores extremos (ex: 0.999999999 ou 0.0)."
 )
 
 # ==========================================
 # FUNÇÕES DE VELOCIDADE
 # ==========================================
 def v_constante(t):
-    # Retorna v0 se t for um número (usado pela integral), ou um array de v0 se for o t_grid (gráfico)
     return float(v0) if np.isscalar(t) else np.full_like(t, v0, dtype=float)
 
 def v_seno(t):
