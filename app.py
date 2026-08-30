@@ -5,7 +5,7 @@ import camb
 
 # Configuração da página do site
 st.set_page_config(page_title="Simulador CMB", layout="wide")
-st.title("Espectro de Potência da Radiação Cósmica de Fundo (CMB)")
+st.title("Simulador CMB Interativo - Atualizado")
 
 # Cria os controles na barra lateral
 st.sidebar.header("Parâmetros Cosmológicos")
