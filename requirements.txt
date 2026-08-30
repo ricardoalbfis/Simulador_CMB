@@ -2,3 +2,4 @@ streamlit
 camb
 matplotlib
 numpy
+plotly
