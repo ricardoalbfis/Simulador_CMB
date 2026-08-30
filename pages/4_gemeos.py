@@ -23,7 +23,6 @@ T = st.sidebar.slider(
     help="Tempo total medido pelo gêmeo que fica na Terra."
 )
 
-# Atualizado para suportar precisão até 0.999999999
 v0 = st.sidebar.slider(
     "Velocidade máxima (v0)", 
     min_value=0.10, 
@@ -37,6 +36,10 @@ v0 = st.sidebar.slider(
 # ==========================================
 # FUNÇÕES DE VELOCIDADE
 # ==========================================
+def v_constante(t):
+    # Retorna v0 se t for um número (usado pela integral), ou um array de v0 se for o t_grid (gráfico)
+    return float(v0) if np.isscalar(t) else np.full_like(t, v0, dtype=float)
+
 def v_seno(t):
     return v0 * np.sin(np.pi * t / T)
 
@@ -66,6 +69,7 @@ def v_onda_quadrada(t):
 
 # Dicionário mapeando os nomes para as funções
 todos_perfis = {
+    "Velocidade Constante (Clássico)": v_constante,
     "Senoide": v_seno,
     "Senoide ao quadrado": v_seno_quadrado,
     "Trapezoide": v_trapezio,
@@ -90,8 +94,6 @@ if not perfis_selecionados:
     st.warning("👈 Por favor, selecione pelo menos um perfil de velocidade na barra lateral.")
 else:
     resultados = []
-    # Aumentei o grid para 1000 pontos para não perder resolução nas curvas 
-    # quando a velocidade se aproxima muito de 1 (onde sqrt(1-v^2) cai abruptamente)
     t_grid = np.linspace(0, T, 1000)
 
     # Cálculo da integral (tempo próprio) para cada perfil selecionado
