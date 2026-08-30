@@ -23,10 +23,15 @@ T = st.sidebar.slider(
     help="Tempo total medido pelo gêmeo que fica na Terra."
 )
 
+# Atualizado para suportar precisão até 0.999999999
 v0 = st.sidebar.slider(
     "Velocidade máxima (v0)", 
-    min_value=0.10, max_value=0.99, value=0.80, step=0.01,
-    help="Fração da velocidade da luz (c=1)."
+    min_value=0.10, 
+    max_value=0.999999999, 
+    value=0.80, 
+    step=0.000000001,
+    format="%.9f",
+    help="Fração da velocidade da luz (c=1). Você pode clicar no número acima da barra para digitar valores extremos (ex: 0.999999999)."
 )
 
 # ==========================================
@@ -75,7 +80,7 @@ st.sidebar.header("Perfis para Comparação")
 perfis_selecionados = st.sidebar.multiselect(
     "Escolha os perfis de velocidade que deseja visualizar:",
     options=list(todos_perfis.keys()),
-    default=list(todos_perfis.keys()) # Por padrão, todos começam marcados
+    default=list(todos_perfis.keys())
 )
 
 # ==========================================
@@ -85,7 +90,9 @@ if not perfis_selecionados:
     st.warning("👈 Por favor, selecione pelo menos um perfil de velocidade na barra lateral.")
 else:
     resultados = []
-    t_grid = np.linspace(0, T, 400)
+    # Aumentei o grid para 1000 pontos para não perder resolução nas curvas 
+    # quando a velocidade se aproxima muito de 1 (onde sqrt(1-v^2) cai abruptamente)
+    t_grid = np.linspace(0, T, 1000)
 
     # Cálculo da integral (tempo próprio) para cada perfil selecionado
     for nome in perfis_selecionados:
@@ -105,7 +112,7 @@ else:
     st.markdown("Ordenados do perfil que **menos envelhece** para o que **mais envelhece**:")
     
     for i, (nome, tau, _) in enumerate(resultados, 1):
-        st.write(f"**{i}. {nome}**: $\\tau = {tau:.4f}$")
+        st.write(f"**{i}. {nome}**: $\\tau = {tau:.6f}$")
 
     # Geração dos gráficos
     st.subheader("Visualização Gráfica")
