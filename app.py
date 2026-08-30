@@ -21,7 +21,8 @@ escala_log = st.sidebar.checkbox("Escala Logarítmica", value=True)
 @st.cache_data
 def modelo_base():
     pars_base = camb.CAMBparams()
-    pars_base.set_cosmology(H0=67.4, ombh2=0.0224, omch2=0.120, omk=0.0)
+    # CORREÇÃO AQUI: adicionado tau=0.0544
+    pars_base.set_cosmology(H0=67.4, ombh2=0.0224, omch2=0.120, omk=0.0, tau=0.0544)
     pars_base.InitPower.set_params(As=2.1e-9, ns=0.965)
     pars_base.set_for_lmax(2500, lens_potential_accuracy=0)
     resultados = camb.get_results(pars_base)
@@ -33,7 +34,8 @@ ls_base, cl_base = modelo_base()
 
 # Calcula o modelo com as escolhas do usuário
 pars = camb.CAMBparams()
-pars.set_cosmology(H0=H0, ombh2=ombh2, omch2=omch2, omk=omk)
+# CORREÇÃO AQUI TAMBÉM: adicionado tau=0.0544
+pars.set_cosmology(H0=H0, ombh2=ombh2, omch2=omch2, omk=omk, tau=0.0544)
 pars.InitPower.set_params(As=2.1e-9 * As_mult, ns=ns)
 pars.set_for_lmax(2500, lens_potential_accuracy=0)
 resultados = camb.get_results(pars)
