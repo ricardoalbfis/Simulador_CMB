@@ -1,0 +1,4 @@
+streamlit
+camb
+matplotlib
+numpy
