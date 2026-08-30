@@ -8,19 +8,15 @@ st.set_page_config(page_title="Idade do Universo vs Redshift", layout="wide")
 st.title("Evolução Temporal: Idade do Universo x Redshift ⏳")
 
 st.markdown("""
-Esta ferramenta plota a **Idade do Universo no eixo X** (em bilhões de anos - Gyr) e o **Redshift ($z$) no eixo Y**, utilizando as equações de Friedmann.
+Esta ferramenta plota a **Idade do Universo no eixo X** (em bilhões de anos - Gyr) e o **Redshift ($z$) no eixo Y**. O gráfico é recalculado automaticamente ao ajustar os parâmetros abaixo.
 """)
 
-# Painel de controle no menu lateral
-with st.sidebar.form("form_idade_cosmologica"):
-    st.header("Parâmetros Cosmológicos")
-    H0 = st.slider("H0 (Constante de Hubble [km/s/Mpc]):", 50.0, 85.0, 67.4, 0.5)
-    Omega_m = st.slider("Ωm (Densidade Total de Matéria):", 0.15, 0.45, 0.315, 0.005)
-    
-    calcular_botao = st.form_submit_button("Gerar Gráfico Invertido")
+# Painel de controle no menu lateral (SEM form para atualizar em tempo real)
+st.sidebar.header("Parâmetros Cosmológicos")
+H0 = st.sidebar.slider("H0 (Constante de Hubble [km/s/Mpc]):", 50.0, 85.0, 67.4, 0.5)
+Omega_m = st.sidebar.slider("Ωm (Densidade Total de Matéria):", 0.15, 0.45, 0.315, 0.005)
 
 # Constantes físicas
-H0_s = H0 * 1000.0 / (3.085677581e22)
 sec_por_ano = 365.25 * 24 * 3600
 anos_por_gyr = 1e9
 
@@ -42,14 +38,13 @@ def calcular_idade_redshift(H0_val, Om_val):
         
     return z_array, np.array(idades)
 
-# Executa o cálculo
+# Executa o cálculo com os valores atuais dos seletores
 z_vals, idade_vals = calcular_idade_redshift(H0, Omega_m)
 
-# Plota o gráfico com eixos invertidos (Idade no X, Redshift no Y)
+# Plota o gráfico (Idade no X, Redshift no Y)
 fig, ax = plt.subplots(figsize=(10, 5))
 plt.style.use('dark_background')
 
-# Invertemos a ordem colocando idade_vals no eixo X e z_vals no eixo Y
 ax.plot(idade_vals, z_vals, color='#38bdf8', linewidth=2.5, label='Modelo FLRW ($\Lambda$CDM)')
 
 ax.set_xlabel('Idade do Universo (Gyr)', fontsize=12)
