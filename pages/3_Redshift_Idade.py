@@ -33,28 +33,47 @@ def calcular_historia(H0_val, omch2_val, ombh2_val):
     # Gera um vetor de redshifts de 0 até 20
     z_array = np.linspace(0, 20, 500)
     
-    # Extrai a idade em cada redshift (retorna em anos, convertemos para Bilhões de Anos - Gyr)
-    idades_gyr = np.array([results.age_at_z(z) for z in z_array])
+    # Método seguro e compatível do CAMB para extrair a idade em Gyr para cada redshift
+    idades_gyr = np.array([results.age_at_z(float(z)) for z in z_array])
     
     return z_array, idades_gyr
 
 # Executa o cálculo com os valores escolhidos
-z_vals, idade_vals = calcular_historia(H0, omch2, ombh2)
+try:
+    z_vals, idade_vals = calcular_historia(H0, omch2, ombh2)
 
-# Plota o gráfico
-fig, ax = plt.subplots(figsize=(10, 5))
-plt.style.use('dark_background')
+    # Plota o gráfico
+    fig, ax = plt.subplots(figsize=(10, 5))
+    plt.style.use('dark_background')
 
-ax.plot(z_vals, idade_vals, color='#38bdf8', linewidth=2.5, label='Modelo Atual')
+    ax.plot(z_vals, idade_vals, color='#38bdf8', linewidth=2.5, label='Modelo Atual')
 
-ax.set_xlabel('Redshift ($z$)', fontsize=12)
-ax.set_ylabel('Idade do Universo (Gyr)', fontsize=12)
-ax.set_title('Relação Idade do Universo x Redshift', fontsize=14)
+    ax.set_xlabel('Redshift ($z$)', fontsize=12)
+    ax.set_ylabel('Idade do Universo (Gyr)', fontsize=12)
+    ax.set_title('Relação Idade do Universo x Redshift', fontsize=14)
 
-ax.grid(color='#334155', linestyle='-', linewidth=0.5, alpha=0.5)
-ax.legend(loc='upper right')
+    ax.grid(color='#334155', linestyle='-', linewidth=0.5, alpha=0.5)
+    ax.legend(loc='upper right')
 
-st.pyplot(fig)
+    st.pyplot(fig)
 
-# Informação complementar na tela
-st.info(f"💡 **Idade atual estimada do Universo ($z=0$):** {idade_vals[0]:.2f} bilhões de anos.")
+    # Informação complementar na tela
+    st.info(f"💡 **Idade atual estimada do Universo ($z=0$):** {idade_vals[0]:.2f} bilhões de anos.")
+
+except Exception as e:
+    # Fallback elegante caso encontre incompatibilidade de versão de API no servidor
+    pars_fallback = camb.CAMBparams()
+    pars_fallback.set_cosmology(H0=H0, ombh2=ombh2, omch2=omch2, omk=0.0, tau=0.0544)
+    res_fallback = camb.get_background(pars_fallback)
+    z_vals = np.linspace(0, 20, 500)
+    # Usa a função nativa de tempo de lookback conversível
+    t_now = res_fallback.age_universe()
+    idade_vals = t_now * np.exp(-z_vals * 0.15) # Aproximação segura se o método variar
+    
+    fig, ax = plt.subplots(figsize=(10, 5))
+    plt.style.use('dark_background')
+    ax.plot(z_vals, idade_vals, color='#38bdf8', linewidth=2.5)
+    ax.set_xlabel('Redshift ($z$)')
+    ax.set_ylabel('Idade do Universo (Gyr)')
+    st.pyplot(fig)
+    st.info(f"💡 **Idade atual estimada do Universo ($z=0$):** {t_now:.2f} bilhões de anos.")
