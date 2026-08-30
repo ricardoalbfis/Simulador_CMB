@@ -8,17 +8,17 @@ st.set_page_config(
 )
 
 # Título da página
-st.title("Bem-vindo ao Portal de Simulações Interativas! 🚀")
-st.write("Desenvolvido pelo **Prof. Ricardo Albrecht**")
+st.title("Portão de Simulações")
+st.write("Desenvolvido pelo **Ricardo Albrecht**")
 
 st.divider() # Cria uma linha de separação
 
 # Mensagem de boas-vindas
 st.markdown("""
 
-👈 **Abra o menu lateral (setinha no canto superior esquerdo)** para escolher e navegar entre os simuladores disponíveis.
+#👈 **Abra o menu lateral (setinha no canto superior esquerdo)** para escolher e navegar entre os simuladores disponíveis.
 
 ---
 **Atualmente disponível no menu:**
-- **1. Espectro CMB:** Simulador termodinâmico da Radiação Cósmica de Fundo (Cosmologia).
+#- **1. Espectro CMB:** Simulador termodinâmico da Radiação Cósmica de Fundo (Cosmologia).
 """)
