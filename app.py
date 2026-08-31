@@ -44,7 +44,7 @@ if pasta_pages.exists():
             with open(arquivo, "r", encoding="utf-8") as f:
                 codigo_fonte = f.read()
                 
-                # O módulo 'ast' analisa o código Python e consegue fisgar a """docstring""" do topo
+                # O  módulo 'ast' analisa o código Python e consegue fisgar a """docstring""" do topo
                 modulo = ast.parse(codigo_fonte)
                 doc = ast.get_docstring(modulo)
                 
