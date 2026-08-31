@@ -5,7 +5,7 @@ from scipy.integrate import quad
 
 # Configuração da página
 st.set_page_config(page_title="Idade do Universo vs Redshift", layout="wide")
-st.title("Evolução Temporal: Idade do Universo x Redshift ⏳")
+st.title("Evolução Temporal: Idade do Universo x Redshift")
 
 st.markdown("""
 Esta ferramenta plota a **Idade do Universo no eixo X** (em bilhões de anos - Gyr) e o **Redshift ($z$) no eixo Y**. 

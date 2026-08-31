@@ -109,7 +109,7 @@ st.markdown("---")
 st.subheader("Análise Interativa do Voo")
 st.write("Passe o mouse sobre as curvas para inspecionar os valores exatos de velocidade e força G em cada instante da viagem.")
 
-tab1, tab2 = st.tabs(["🚀 Perfil de Velocidade", "💥 O Esmagamento (Aceleração Própria)"])
+tab1, tab2 = st.tabs(["Perfil de Velocidade", "O Esmagamento (Aceleração Própria)"])
 
 with tab1:
     fig_v = go.Figure()
