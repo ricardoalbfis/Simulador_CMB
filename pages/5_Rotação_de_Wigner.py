@@ -129,7 +129,7 @@ with col2:
     st.metric(label="Ângulo Teórico (fórmula fechada)", value=f"{theta_deg_ana:.2f}°")
     
     if abs(v1 - 0.6) < 1e-5 and abs(v2 - 0.6) < 1e-5:
-        st.success("🎯 Sucesso! Para $v_1 = v_2 = 0.6$, o ângulo recuperado corresponde exatamente aos 12,7° previstos pelo exercício.")
+        st.success("Confirmado! Para $v_1 = v_2 = 0.6$, o ângulo recuperado corresponde exatamente aos 12,7° previstos pelo exercício.")
 
 # ==========================================
 # VISUALIZAÇÃO GRÁFICA (MAPA DE CALOR)
