@@ -7,10 +7,10 @@ import camb
 st.set_page_config(page_title="Simulador CMB", layout="wide")
 st.title("Espectro de Potência da CMB")
 
-# A GRANDE MUDANÇA: Criamos um 'form' para exigir um clique em botão
+# Controles no menu lateral com slider de H0 estendido até 1000
 with st.sidebar.form("controles_cosmologicos"):
     st.header("Parâmetros Cosmológicos")
-    H0 = st.slider("H0 (Constante de Hubble):", 0.0, 85.0, 1000, 0.5)
+    H0 = st.slider("H0 (Constante de Hubble):", 0.0, 1000.0, 67.4, 1.0)
     ombh2 = st.slider("Ωb h² (Densidade de Bárions):", 0.010, 0.040, 0.0224, 0.001)
     omch2 = st.slider("Ωc h² (Matéria Escura):", 0.050, 0.250, 0.120, 0.005)
     omk = st.slider("Ωk (Curvatura):", -0.05, 0.05, 0.0, 0.01)
