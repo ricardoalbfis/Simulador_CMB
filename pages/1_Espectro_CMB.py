@@ -1,11 +1,11 @@
 import streamlit as st
 import numpy as np
-import matplotlib.pyplot as plt
 import camb
+import plotly.graph_objects as go
 
 # Configuração da página
 st.set_page_config(page_title="Simulador CMB", layout="wide")
-st.title("Espectro de Potência da CMB")
+st.title("Espectro de Potência da CMB (Interativo)")
 
 # Controles no menu lateral com slider de H0 estendido até 1000
 with st.sidebar.form("controles_cosmologicos"):
@@ -16,7 +16,7 @@ with st.sidebar.form("controles_cosmologicos"):
     omk = st.slider("Ωk (Curvatura):", -0.05, 0.05, 0.0, 0.01)
     ns = st.slider("ns (Índice Espectral):", 0.85, 1.10, 0.965, 0.01)
     As_mult = st.slider("Amplitude (Multiplicador):", 0.5, 1.5, 1.0, 0.05)
-    escala_log = st.checkbox("Escala Logarítmica", value=True)
+    escala_log = st.checkbox("Escala Logarítmica no Eixo X", value=True)
     
     # O botão que impede o servidor de sobrecarregar
     calcular = st.form_submit_button("Calcular Gráfico")
@@ -43,23 +43,34 @@ pars.set_for_lmax(1500, lens_potential_accuracy=0)
 resultados = camb.get_results(pars)
 cl_custom = resultados.get_cmb_power_spectra(pars, CMB_unit='muK')['total'][:, 0]
 
-# Desenha o gráfico
-fig, ax = plt.subplots(figsize=(10, 5))
-plt.style.use('dark_background')
+# Construção do gráfico interativo com Plotly (permite zoom, pan e hover com os valores exatos)
+fig = go.Figure()
 
-# Plota até 1500
-ax.plot(ls_base[2:1501], cl_base[2:1501], color='#94a3b8', linestyle='--', linewidth=2, label='ΛCDM')
-ax.plot(ls_base[2:1501], cl_custom[2:1501], color='#ef4444', linewidth=2.5, label='Modelo Modificado')
+fig.add_trace(go.Scatter(
+    x=ls_base[2:1501], 
+    y=cl_base[2:1501], 
+    mode='lines', 
+    name='ΛCDM (Referência)',
+    line=dict(color='#94a3b8', width=2, dash='dash')
+))
 
-ax.set_xlabel(r'Multipolo $\ell$', fontsize=12)
-ax.set_ylabel(r'$\ell(\ell+1)C_\ell / 2\pi \quad [\mu K^2]$', fontsize=12)
+fig.add_trace(go.Scatter(
+    x=ls_base[2:1501], 
+    y=cl_custom[2:1501], 
+    mode='lines', 
+    name='Modelo Modificado',
+    line=dict(color='#ef4444', width=2.5)
+))
 
-if escala_log:
-    ax.set_xscale('log')
+fig.update_layout(
+    title="Espectro de Potência Angular do CMB",
+    xaxis_title="Multipolo (ℓ)",
+    yaxis_title="D_ℓ^TT [μK²]",
+    xaxis=dict(type="log" if escala_log else "linear", range=[2, 1500]),
+    yaxis=dict(range=[0, 7500]),
+    template="plotly_dark",
+    hovermode="x unified",
+    legend=dict(x=0.75, y=0.95)
+)
 
-ax.set_xlim(2, 1500)
-ax.set_ylim(0, 7500)
-ax.grid(color='#334155', linestyle='-', linewidth=0.5, alpha=0.5)
-ax.legend(loc='upper right')
-
-st.pyplot(fig)
+st.plotly_chart(fig, use_container_width=True)
